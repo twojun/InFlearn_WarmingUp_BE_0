@@ -1,34 +1,61 @@
 package com.group.libraryapp.controller.user;
 
-import com.group.libraryapp.domain.user.User;
-import com.group.libraryapp.dto.user.request.UserCreateRequest;
-import com.group.libraryapp.dto.user.request.UserListDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.group.libraryapp.dto.user.request.UserCreateRequestDto;
+import com.group.libraryapp.dto.user.request.UserDeleteRequestDto;
+import com.group.libraryapp.dto.user.request.UserUpdateRequestDto;
+import com.group.libraryapp.dto.user.response.UserListResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
-    private final List<User> users = new ArrayList<>();
+    private final JdbcTemplate jdbcTemplate;
 
     @GetMapping("/user")
-    public List<UserListDto> getAllUsers() {
-        List<UserListDto> response = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            response.add(new UserListDto(i + 1, users.get(i).getName(), users.get(i).getAge()));
-        }
-
-        return response;
+    public List<UserListResponseDto> getAllUsers() {
+        String sql = "select * from user";
+        return jdbcTemplate.query(sql, (rs, rowNum) ->  {
+            long id = rs.getLong("id");
+            String name = rs.getString("name");
+            int age = rs.getInt("age");
+            return new UserListResponseDto(id, name, age);
+        });
     }
 
     @PostMapping("/user")
-    public void saveUser(@RequestBody UserCreateRequest request) {
-        users.add(new User(request.getName(), request.getAge()));
+    public void saveUser(@RequestBody UserCreateRequestDto request) {
+        String sql = "insert into user(name, age) values(?, ?)";
+        jdbcTemplate.update(sql, request.getName(), request.getAge());
     }
 
+    @PutMapping("/user")
+    public void updateUser(@RequestBody UserUpdateRequestDto request) {
+        String selectSql = "select * from user where id = ?";
+        boolean isUserNotExist = jdbcTemplate.query(selectSql, (rs, rowNum) -> 0, request.getId()).isEmpty();
+
+        if (isUserNotExist) {
+            throw new IllegalStateException("존재하지 않는 회원입니다.");
+        }
+
+        String sql = "update user set name = ? where id = ?";
+        jdbcTemplate.update(sql, request.getName(), request.getId());
+    }
+
+    @DeleteMapping("/user")
+    public void deleteUser(UserDeleteRequestDto request) {
+        String selectSql = "select * from user where name = ?";
+        boolean isUserNotExist = jdbcTemplate.query(selectSql, (rs, rowNum) -> 0, request.getName()).isEmpty();
+
+        if (isUserNotExist) {
+            throw new IllegalStateException("존재하지 않는 회원은 삭제할 수 없습니다.");
+        }
+
+        String sql = "delete from user where name = ?";
+        jdbcTemplate.update(sql, request.getName());
+    }
 }

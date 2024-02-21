@@ -1,15 +1,15 @@
-package com.group.libraryapp.dto.user.request;
+package com.group.libraryapp.dto.user.response;
 
 import lombok.Getter;
 
 @Getter
-public class UserListDto {
+public class UserListResponseDto {
 
     private long id;
     private String name;
     private Integer age;
 
-    public UserListDto(long id, String name, Integer age) {
+    public UserListResponseDto(long id, String name, Integer age) {
         this.id = id;
         this.name = name;
         this.age = age;
