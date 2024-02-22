@@ -3,7 +3,7 @@ package com.group.libraryapp.controller.member;
 import com.group.libraryapp.config.CustomMyAnnotation;
 import com.group.libraryapp.domain.member.Member;
 import com.group.libraryapp.dto.member.MemberListResponseDto;
-import com.group.libraryapp.service.MemberService;
+import com.group.libraryapp.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 

@@ -3,8 +3,8 @@ package com.group.libraryapp.controller.fruit;
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequestDto;
 import com.group.libraryapp.dto.fruit.request.FruitSaleStateUpdateRequestDto;
 import com.group.libraryapp.dto.fruit.response.FruitSaleNoSaleTotalPriceDto;
+import com.group.libraryapp.service.Fruit.FruitService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,41 +13,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FruitController {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final FruitService fruitService;
 
     @PostMapping("/api/v1/fruit")
     public void createFruit(@RequestBody FruitCreateRequestDto request) {
-        String sql = "insert into fruit (name, warehousing_date, price) values (?, ?, ?)";
-
-        jdbcTemplate.update(sql, request.getName(), request.getWarehousingDate(), request.getPrice());
-    }
-
-    @PutMapping("/api/v1/fruit")
-    public void updateSaleState(@RequestBody FruitSaleStateUpdateRequestDto request) {
-        String selectSql = "select * from fruit where fruit_id = ?";
-        boolean isFruitNotExist = jdbcTemplate.query(selectSql, (rs, rowNum) -> 0, request.getId()).isEmpty();
-
-        if (isFruitNotExist) {
-            throw new IllegalStateException("존재하지 않는 과일 정보입니다.");
-        }
-
-        String sql = "update fruit set is_sale = 1 where fruit_id = ?";
-
-        jdbcTemplate.update(sql, request.getId());
+        fruitService.createFruit(request);
     }
 
     @GetMapping("/api/v1/fruit/stat")
     public List<FruitSaleNoSaleTotalPriceDto> getSaleAndNoSaleTotalPrice(@RequestParam String name) {
-        String sql = "select " +
-                "(select sum(price) from fruit where is_sale = 1) as salesAmount, " +
-                "(select sum(price) from fruit where is_sale = 0) as notSalesAmount";
+        return fruitService.getSaleAndNoSaleTotalPrice(name);
+    }
 
-//        String sql = "select is_sale, sum(price) as total_price from fruit group by is_sale";
-
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-           long salesAmount = rs.getLong("salesAmount");
-           long notSalesAmount = rs.getLong("notSalesAmount");
-           return new FruitSaleNoSaleTotalPriceDto(salesAmount, notSalesAmount);
-        });
+    @PutMapping("/api/v1/fruit")
+    public void updateSaleState(@RequestBody FruitSaleStateUpdateRequestDto request) {
+        fruitService.updateSaleState(request);
     }
 }

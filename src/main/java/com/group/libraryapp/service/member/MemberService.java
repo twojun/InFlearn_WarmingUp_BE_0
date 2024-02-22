@@ -1,7 +1,7 @@
-package com.group.libraryapp.service;
+package com.group.libraryapp.service.member;
 
 import com.group.libraryapp.domain.member.Member;
-import com.group.libraryapp.repository.MemberRepository;
+import com.group.libraryapp.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
