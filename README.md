@@ -7,7 +7,9 @@
 [1일 차] : https://twojun-space.tistory.com/177 <br>
 [2일 차] : https://twojun-space.tistory.com/179 <br>
 [3일 차] : https://twojun-space.tistory.com/181 <br>
-[4일 차] : https://twojun-space.tistory.com/183 <br><br><br><br><br>
+[4일 차] : https://twojun-space.tistory.com/183 <br>
+[5일 차] : https://twojun-space.tistory.com/185 <br>
+[6일 차] : https://twojun-space.tistory.com/187 <br><br><br><br><br>
 
 
 
@@ -15,4 +17,7 @@
 [1일 차 - Java(Spring) Annotation research] : https://twojun-space.tistory.com/178 <br>
 [2일 차 - Java(Spring) GET, POST API] : https://twojun-space.tistory.com/180 <br>
 [3일 차 - Java(Spring) FP, Lambda, Stream API] : https://twojun-space.tistory.com/182 <br>
-[4일 차 - Java(Spring) GET, POST, PUT API] : https://twojun-space.tistory.com/184
+[4일 차 - Java(Spring) GET, POST, PUT API] : https://twojun-space.tistory.com/184 <br>
+[5일 차 - Java(Spring) Clean code, Refactoring] : https://twojun-space.tistory.com/186 <br>
+[6일 차 - Java(Spring) Controller-Service-Repository Separation] : https://twojun-space.tistory.com/188
+
