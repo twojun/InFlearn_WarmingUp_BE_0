@@ -9,13 +9,15 @@ import java.util.List;
 @Repository
 public interface FruitRepository extends JpaRepository<Fruit, Long> {
 
-    // select * from fruit where name = ? and salesStatus = false;
-    long findByNameAndSalesStatusIsFalse(String name);
+    // select * from fruit where name = ? and salesStatus = true;
+    long countByNameAndSalesStatusIsTrue(String name);
+    long countByPriceGreaterThanEqualAndSalesStatusIsFalse(long price);
 
     // select * from fruit where price >= ? and salesStatus = false;
     List<Fruit> findByPriceGreaterThanEqualAndSalesStatusIsFalse(long price);
 
     // select * from fruit where price <= ? and salesStatus = false;
     List<Fruit> findByPriceLessThanEqualAndSalesStatusIsFalse(long price);
+    long countByPriceLessThanEqualAndSalesStatusIsFalse(long price);
 
 }

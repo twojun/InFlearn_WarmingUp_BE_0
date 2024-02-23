@@ -4,6 +4,7 @@ import com.group.libraryapp.domain.fruit.Fruit;
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequestDto;
 import com.group.libraryapp.dto.fruit.request.FruitSaleStateUpdateRequestDto;
 import com.group.libraryapp.dto.fruit.response.FruitNoSalePriceResponseDto;
+import com.group.libraryapp.dto.fruit.response.FruitNoSalePriceAndCountResponseDto;
 import com.group.libraryapp.repository.fruit.FruitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -33,7 +34,7 @@ public class FruitServiceV2 {
     }
 
     public long getSaleFruitCount(String name) {
-        return fruitRepository.findByNameAndSalesStatusIsFalse(name);
+        return fruitRepository.countByNameAndSalesStatusIsTrue(name);
     }
 
     public List<FruitNoSalePriceResponseDto> getNoSaleAmount(String option, long price) {
@@ -44,6 +45,20 @@ public class FruitServiceV2 {
         } else {
             return fruitRepository.findByPriceLessThanEqualAndSalesStatusIsFalse(price).stream()
                     .map(FruitNoSalePriceResponseDto::new)
+                    .collect(Collectors.toList());
+        }
+    }
+
+    public List<FruitNoSalePriceAndCountResponseDto> getNoSaleAmountAndCount(String option, long price) {
+        if (option.equals("GTE")) {
+            long resultSize = fruitRepository.countByPriceGreaterThanEqualAndSalesStatusIsFalse(price);
+            return fruitRepository.findByPriceGreaterThanEqualAndSalesStatusIsFalse(price).stream()
+                    .map(fruit -> new FruitNoSalePriceAndCountResponseDto(resultSize, fruit))
+                    .collect(Collectors.toList());
+        } else {
+            long resultSize = fruitRepository.countByPriceLessThanEqualAndSalesStatusIsFalse(price);
+            return fruitRepository.findByPriceLessThanEqualAndSalesStatusIsFalse(price).stream()
+                    .map(fruit -> new FruitNoSalePriceAndCountResponseDto(resultSize, fruit))
                     .collect(Collectors.toList());
         }
     }

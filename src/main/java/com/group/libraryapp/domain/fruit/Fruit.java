@@ -1,28 +1,26 @@
 package com.group.libraryapp.domain.fruit;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 public class Fruit {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private Long price;
-    private LocalDateTime warehousingDate;
+    private LocalDate warehousingDate;
     private boolean salesStatus = false;
 
     public Fruit() {}
 
     // 과일 생성
-    public Fruit(String name, Long price, LocalDateTime warehousingDate) {
+    public Fruit(String name, Long price, LocalDate warehousingDate) {
         this.name = name;
         this.price = price;
         this.warehousingDate = warehousingDate;

@@ -4,20 +4,19 @@ import com.group.libraryapp.domain.fruit.Fruit;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
-public class FruitNoSalePriceResponseDto {
+public class FruitNoSalePriceAndCountResponseDto {
+
+    private Long resultSize;
 
     private String name;
-    private long price;
     private LocalDate warehousingDate;
     private boolean salesStatus;
 
-
-    public FruitNoSalePriceResponseDto(Fruit fruit) {
+    public FruitNoSalePriceAndCountResponseDto(Long resultSize, Fruit fruit) {
+        this.resultSize = resultSize;
         this.name = fruit.getName();
-        this.price = fruit.getPrice();
         this.warehousingDate = fruit.getWarehousingDate();
         this.salesStatus = fruit.isSalesStatus();
     }

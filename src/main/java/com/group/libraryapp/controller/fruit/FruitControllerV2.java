@@ -2,6 +2,7 @@ package com.group.libraryapp.controller.fruit;
 
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequestDto;
 import com.group.libraryapp.dto.fruit.request.FruitSaleStateUpdateRequestDto;
+import com.group.libraryapp.dto.fruit.response.FruitNoSalePriceAndCountResponseDto;
 import com.group.libraryapp.dto.fruit.response.FruitNoSalePriceResponseDto;
 import com.group.libraryapp.service.Fruit.FruitServiceV2;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,11 @@ public class FruitControllerV2 {
     @GetMapping("/api/v2/fruit/list")
     public List<FruitNoSalePriceResponseDto> getNoSaleAmount(@RequestParam String option, @RequestParam long price) {
         return fruitServiceV2.getNoSaleAmount(option, price);
+    }
+
+    // 판매되지 않은 특정 금액, 이하 과일 목록들, 결과 반환 개수까지
+    @GetMapping("/api/v2/fruit/list/result")
+    public List<FruitNoSalePriceAndCountResponseDto> getNoSaleAmountAndResultCount(@RequestParam String option, @RequestParam long price) {
+        return fruitServiceV2.getNoSaleAmountAndCount(option, price);
     }
 }
