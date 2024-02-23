@@ -1,9 +1,10 @@
 package com.group.libraryapp.controller.fruit;
 
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequestDto;
+import com.group.libraryapp.dto.fruit.request.FruitIsExistDto;
 import com.group.libraryapp.dto.fruit.request.FruitSaleStateUpdateRequestDto;
 import com.group.libraryapp.dto.fruit.response.FruitSaleNoSaleTotalPriceDto;
-import com.group.libraryapp.service.Fruit.FruitService;
+import com.group.libraryapp.service.Fruit.FruitServiceV1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FruitController {
 
-    private final FruitService fruitService;
+    private final FruitServiceV1 fruitService;
 
     @PostMapping("/api/v1/fruit")
     public void createFruit(@RequestBody FruitCreateRequestDto request) {
@@ -26,7 +27,7 @@ public class FruitController {
     }
 
     @PutMapping("/api/v1/fruit")
-    public void updateSaleState(@RequestBody FruitSaleStateUpdateRequestDto request) {
+    public void updateSaleState(@RequestBody FruitIsExistDto request) {
         fruitService.updateSaleState(request);
     }
 }

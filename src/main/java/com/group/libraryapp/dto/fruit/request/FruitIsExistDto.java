@@ -3,7 +3,7 @@ package com.group.libraryapp.dto.fruit.request;
 import lombok.Data;
 
 @Data
-public class FruitSaleStateUpdateRequestDto {
+public class FruitIsExistDto {
 
-    private boolean salesStatus;
+    private long id;
 }

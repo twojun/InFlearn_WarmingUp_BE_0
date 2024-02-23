@@ -4,11 +4,9 @@ import com.group.libraryapp.dto.user.request.UserCreateRequestDto;
 import com.group.libraryapp.dto.user.request.UserDeleteRequestDto;
 import com.group.libraryapp.dto.user.request.UserUpdateRequestDto;
 import com.group.libraryapp.dto.user.response.UserListResponseDto;
-import com.group.libraryapp.service.Fruit.FruitService;
-import com.group.libraryapp.service.user.UserService;
+import com.group.libraryapp.service.user.UserServiceV1;
+import com.group.libraryapp.service.user.UserServiceV2;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceV2 userService;
 
     @PostMapping("/user")
     public void saveUser(@RequestBody UserCreateRequestDto request) {

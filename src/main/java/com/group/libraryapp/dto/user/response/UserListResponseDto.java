@@ -15,4 +15,10 @@ public class UserListResponseDto {
         this.name = name;
         this.age = age;
     }
+
+    public UserListResponseDto(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.age = user.getAge();
+    }
 }

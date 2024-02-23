@@ -1,7 +1,7 @@
 package com.group.libraryapp.repository.fruit;
 
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequestDto;
-import com.group.libraryapp.dto.fruit.request.FruitSaleStateUpdateRequestDto;
+import com.group.libraryapp.dto.fruit.request.FruitIsExistDto;
 import com.group.libraryapp.dto.fruit.response.FruitSaleNoSaleTotalPriceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,12 +34,12 @@ public class FruitMemoryRepository implements FruitRepositoryInterface {
         });
     }
 
-    public boolean isFruitNotExist(FruitSaleStateUpdateRequestDto request) {
+    public boolean isFruitNotExist(FruitIsExistDto request) {
         String selectSql = "select * from fruit where fruit_id = ?";
         return jdbcTemplate.query(selectSql, (rs, rowNum) -> 0, request.getId()).isEmpty();
     }
 
-    public void updateFruitSaleState(FruitSaleStateUpdateRequestDto request) {
+    public void updateFruitSaleState(FruitIsExistDto request) {
         String sql = "update fruit set is_sale = 1 where fruit_id = ?";
         jdbcTemplate.update(sql, request.getId());
     }

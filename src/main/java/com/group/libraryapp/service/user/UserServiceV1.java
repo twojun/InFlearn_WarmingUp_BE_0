@@ -4,7 +4,7 @@ import com.group.libraryapp.domain.user.User;
 import com.group.libraryapp.dto.user.request.UserCreateRequestDto;
 import com.group.libraryapp.dto.user.request.UserDeleteRequestDto;
 import com.group.libraryapp.dto.user.request.UserUpdateRequestDto;
-import com.group.libraryapp.repository.user.UserRepository;
+import com.group.libraryapp.repository.user.UserJdbcRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,29 +12,29 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceV1 {
 
-    private final UserRepository userRepository;
+    private final UserJdbcRepository userJdbcRepository;
 
     public void saveUser(UserCreateRequestDto request) {
-        userRepository.saveUser(request.getName(), request.getAge());
+        userJdbcRepository.saveUser(request.getName(), request.getAge());
     }
 
     public List<User> findAllUser() {
-        return userRepository.findAllUser();
+        return userJdbcRepository.findAllUser();
     }
 
     public void updateUser(UserUpdateRequestDto request) {
-        if (userRepository.isUserNotExist(request.getId())) {
+        if (userJdbcRepository.isUserNotExist(request.getId())) {
             throw new IllegalStateException("존재하지 않는 회원입니다.");
         }
-        userRepository.updateUserName(request.getName(), request.getId());
+        userJdbcRepository.updateUserName(request.getName(), request.getId());
     }
 
     public void deleteUser(UserDeleteRequestDto request) {
-        if (userRepository.isUserNotExist(request.getName())) {
+        if (userJdbcRepository.isUserNotExist(request.getName())) {
             throw new IllegalStateException("존재하지 않는 회원입니다.");
         }
-        userRepository.deleteUserByUsername(request.getName());
+        userJdbcRepository.deleteUserByUsername(request.getName());
     }
 }
