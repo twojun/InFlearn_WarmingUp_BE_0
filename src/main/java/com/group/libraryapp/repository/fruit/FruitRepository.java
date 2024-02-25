@@ -11,10 +11,10 @@ public interface FruitRepository extends JpaRepository<Fruit, Long> {
 
     // select * from fruit where name = ? and salesStatus = true;
     long countByNameAndSalesStatusIsTrue(String name);
-    long countByPriceGreaterThanEqualAndSalesStatusIsFalse(long price);
 
     // select * from fruit where price >= ? and salesStatus = false;
     List<Fruit> findByPriceGreaterThanEqualAndSalesStatusIsFalse(long price);
+    long countByPriceGreaterThanEqualAndSalesStatusIsFalse(long price);
 
     // select * from fruit where price <= ? and salesStatus = false;
     List<Fruit> findByPriceLessThanEqualAndSalesStatusIsFalse(long price);
