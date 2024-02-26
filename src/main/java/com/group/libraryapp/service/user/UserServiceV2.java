@@ -37,15 +37,12 @@ public class UserServiceV2 {
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
 
         findUser.updateName(request.getName());
-//        userRepository.save(findUser);
     }
 
     @Transactional
     public void deleteUser(UserDeleteRequestDto request) {
-        User findUser = userRepository.findByName(request.getName());
-        if (findUser == null) {
-            throw new IllegalStateException("존재하지 않는 회원입니다.");
-        }
+        User findUser = userRepository.findByName(request.getName())
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
 
         userRepository.delete(findUser);
     }
