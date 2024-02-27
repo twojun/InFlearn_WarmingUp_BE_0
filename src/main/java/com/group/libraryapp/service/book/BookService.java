@@ -42,7 +42,7 @@ public class BookService {
         User findUser = userRepository.findByName(request.getUserName())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원 정보입니다."));
 
-        userLoanHistoryRepository.save(new UserLoanHistory(findUser.getId(), findBook.getName()));
+        findUser.loanBook(findBook.getName());
     }
 
     @Transactional
@@ -55,11 +55,6 @@ public class BookService {
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 도서 정보입니다."));
 
         // findBook, findUser가 모두 히스토리에 존재해야 반납 가능
-        UserLoanHistory history = userLoanHistoryRepository.findByUserIdAndBookNameAndIsReturn(findUser.getId(), findBook.getName(), false)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 대출 정보입니다."));
-
-        history.doReturn();
-
-
+        findUser.returnBook(request.getBookName());
     }
 }

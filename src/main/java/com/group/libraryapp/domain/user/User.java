@@ -3,6 +3,9 @@ package com.group.libraryapp.domain.user;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 public class User {
@@ -14,6 +17,9 @@ public class User {
     private String name;
 
     private Integer age;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserLoanHistory> userLoanHistories = new ArrayList<>();
 
     public User(String name, Integer age) {
         /** 회원의 이름은 공백일 수 없다 */
@@ -34,5 +40,20 @@ public class User {
 
     public void updateName(String name) {
         this.name = name;
+    }
+
+    // 대출 : 도메인 내부에 핵심 비즈니스 추가(객체 간 협력이 가능하도록)
+    public void loanBook(String bookName) {
+        this.userLoanHistories.add(new UserLoanHistory(this, bookName));
+    }
+
+    // 반납
+    public void returnBook(String bookName) {
+        UserLoanHistory targetHistory = this.userLoanHistories.stream()
+                .filter(history -> history.getBookName().equals(bookName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 책을 대상으로 대출 기록이 존재하지 않습니다."));
+
+        targetHistory.doReturn();
     }
 }
