@@ -10,7 +10,7 @@ public class UserLoanHistory {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     private String bookName;

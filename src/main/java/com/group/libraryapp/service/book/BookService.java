@@ -2,7 +2,6 @@ package com.group.libraryapp.service.book;
 
 import com.group.libraryapp.domain.book.Book;
 import com.group.libraryapp.domain.user.User;
-import com.group.libraryapp.domain.user.UserLoanHistory;
 import com.group.libraryapp.dto.book.request.BookCreateRequest;
 import com.group.libraryapp.dto.book.request.BookLoanRequest;
 import com.group.libraryapp.dto.book.request.BookReturnRequest;
@@ -50,9 +49,6 @@ public class BookService {
         // 존재하는 책, 회원인지 확인 필요
         User findUser = userRepository.findByName(request.getUserName())
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원 정보입니다."));
-
-        Book findBook = bookRepository.findByName(request.getBookName())
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 도서 정보입니다."));
 
         // findBook, findUser가 모두 히스토리에 존재해야 반납 가능
         findUser.returnBook(request.getBookName());
