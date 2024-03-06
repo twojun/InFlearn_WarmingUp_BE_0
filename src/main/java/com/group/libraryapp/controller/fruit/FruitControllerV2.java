@@ -45,4 +45,6 @@ public class FruitControllerV2 {
     public List<FruitNoSalePriceAndCountResponseDto> getNoSaleAmountAndResultCount(@RequestParam String option, @RequestParam long price) {
         return fruitServiceV2.getNoSaleAmountAndCount(option, price);
     }
+
+
 }
